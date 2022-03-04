@@ -28,6 +28,7 @@ class Calculator(QtWidgets.QMainWindow):
             i.setFont(QFont('Arial',15))
             i.resize(70,40)
             i.setStyleSheet('background-color:white')
+            i.clicked.connect(self.enterNumber)
             btn_number.append(i)
 
         btn_index = 0
@@ -43,6 +44,7 @@ class Calculator(QtWidgets.QMainWindow):
             i.resize(70,40)
             i.setStyleSheet('background-color:white')
             i.setFont(QFont('Arial',15))
+            i.clicked.connect(self.enterOperator)
             btn_operator.append(i)
         
         btn_operator[0].setText('+')
@@ -57,11 +59,13 @@ class Calculator(QtWidgets.QMainWindow):
         btn_zero = QtWidgets.QPushButton('0',self)
         btn_zero.setStyleSheet('background-color:white')
         btn_zero.setFont(QFont('Arial',20))
+        btn_zero.clicked.connect(self.enterNumber)
         btn_zero.resize(250,40)
         btn_zero.move(25,280)
         
         btn_clear = QtWidgets.QPushButton('C',self)
         btn_clear.setStyleSheet('background-color:white')
+        
         btn_clear.setFont(QFont('Arial',20))
         btn_clear.resize(70,40)
         btn_clear.move(25,340)
@@ -84,7 +88,22 @@ class Calculator(QtWidgets.QMainWindow):
         btn_delete.setIcon(QIcon('arrow.png'))
         btn_delete.resize(70,40)
         btn_delete.move(290,340)
-        
+    
+    #?enterNumber Function
+    def enterNumber(self):
+        btn_text = self.sender().text()#sender is signa in Pyqt5 ,clicked button return text by button
+        if(self.entry_box.text() == 'O'):
+            self.entry_box.setText('')
+            self.entry_box.setText(btn_text)
+        else:
+            self.entry_box.setText(self.entry_box.text()+btn_text)
+    
+    #?enterOperator Function
+    def enterOperator(self):
+        btn_text_operator = self.sender().text()
+        if(self.entry_box.text() != "O"):
+            self.entry_box.setText(self.entry_box.text()+btn_text_operator)
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
